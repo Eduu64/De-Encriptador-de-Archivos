@@ -26,16 +26,17 @@ def encriptarARCHIVO():
         data = archivo.read()
         data_encriptada = f.encrypt(data)
 
-    nombre = nom_archivo + "_encrypted" + ".txt"
-
-    i = 1
-    while os.path.isfile(nombre):
-        nombre = f"{nom_archivo}_encrypted({i}).txt"
-        i += 1
+    nombre, ext = os.path.splitext(nom_archivo)
+    nombre_enc = nombre + "_encrypted"
+    nombre_final = nombre_enc + ext
     
+    if os.path.exists(nombre_final):
+        i = 1
+        while os.path.exists(f"{nombre_enc}({i}){ext}"):
+            i += 1
+        nombre_final = f"{nombre_enc}({i}){ext}"
 
-
-    with open(nombre,"wb") as archivo:
+    with open(nombre_final,"wb") as archivo:
         archivo.write(data_encriptada)
 
 def des_encriptarARCHIVO():
@@ -47,14 +48,17 @@ def des_encriptarARCHIVO():
         data = archivo.read()
         data_desencriptada = f.decrypt(data).decode()
 
-    nombre = nom_archivo + "_decrypted" + ".txt"
+    nombre, ext = os.path.splitext(nom_archivo)
+    nombre_enc = nombre + "_decrypted"
+    nombre_final = nombre_enc + ext
+    
+    if os.path.exists(nombre_final):
+        i = 1
+        while os.path.exists(f"{nombre_enc}({i}){ext}"):
+            i += 1
+        nombre_final = f"{nombre_enc}({i}){ext}"
 
-    i = 1
-    while os.path.isfile(nombre):
-        nombre = f"{nom_archivo}_decrypted({i}).txt"
-        i += 1
-
-    with open(nombre,"w") as archivo:
+    with open(nombre_final,"w") as archivo:
         archivo.write(data_desencriptada)
 
     
