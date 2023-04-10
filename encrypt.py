@@ -60,7 +60,7 @@ def des_encriptarARCHIVO():
     f = Fernet(key)
     with open(nom_archivo,"rb") as archivo:
         data = archivo.read()
-        data_desencriptada = f.decrypt(data).decode()
+        data_desencriptada = f.decrypt(data)
 
     nombre, ext = os.path.splitext(nom_archivo)
     nombre_enc = nombre + "_decrypted"
@@ -72,7 +72,7 @@ def des_encriptarARCHIVO():
             i += 1
         nombre_final = f"{nombre_enc}({i}){ext}"
 
-    with open(nombre_final,"w") as archivo:
+    with open(nombre_final,"wb") as archivo:
         archivo.write(data_desencriptada)
 
     
